@@ -1,9 +1,15 @@
 /*
-todo: figure out mode switching (changin event listeners)
-implement shade mode
-
+todo: implement draw on mousehold
+      fix resizing bug for big values
 */
 
+/**
+ * if useClick and e.buttons == 1 or !useClick
+ * 
+ * 
+ * 
+ */
+var useClick = false;
 var Size = 20;
 function initializeGrid(){
   let container = document.querySelector("#grid-container");
@@ -32,29 +38,36 @@ function clearGrid(){
 
 function applyDefaultMode(){
   let tiles = [...document.querySelector("#grid-container").childNodes];
-  tiles.forEach((tile)=>{
-    tile.onmouseover = (e)=>{
-      e.target.style.backgroundColor = "rgb(0,0,0)";
+    tiles.forEach(tile=>{
+      tile.onmouseover = tile.onmousedown = (e)=>{
+      if(useClick && e.buttons == 1 || !useClick){
+        e.target.style.backgroundColor = "rgb(0,0,0)";
+      }
     };
   });
-}
+};
+
 function applyShadeMode(){
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
-    tile.onmouseover = (e)=>{
-      let rgbArray = e.target.style.backgroundColor.match(/\d+/g);
-      rgbArray = rgbArray.map(x=>{
-       return  +x-26 < 0 ? 0 : +x-26; 
-      });
-      e.target.style.backgroundColor = `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;
+    tile.onmouseover = tile.onmousedown = (e)=>{
+      if(useClick && e.buttons == 1 || !useClick){
+        let rgbArray = e.target.style.backgroundColor.match(/\d+/g);
+        rgbArray = rgbArray.map(x=>{
+        return  +x-26 < 0 ? 0 : +x-26; 
+        });
+        e.target.style.backgroundColor = `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;
+      }
     };
   });
 }
 function applyEraseMode(){
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
-    tile.onmouseover = (e)=>{
-      e.target.style.backgroundColor = 'white';
+    tile.onmouseover = tile.onmousedown = (e)=>{
+      if(useClick && e.buttons == 1 || !useClick){
+        e.target.style.backgroundColor = 'white';
+      }
     };
   });
 }
@@ -62,16 +75,18 @@ function applyEraseMode(){
 function applyRandomMode(){
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
-    tile.onmouseover = (e)=>{
+    tile.onmouseover = tile.onmousedown = (e)=>{
+      if(useClick && e.buttons == 1 || !useClick){
       r = Math.random() * 256;
       g = Math.random() * 256;
       b = Math.random() * 256;
       e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
+      }
     };
   })
 }
 
-
+document.querySelector("#useClick").onclick = ()=>{useClick = !useClick;};
 document.querySelector("#random-mode").onclick = applyRandomMode;
 document.querySelector("#shade-mode").onclick = applyShadeMode;
 document.querySelector("#erase-mode").onclick = applyEraseMode;
