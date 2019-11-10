@@ -4,7 +4,7 @@ implement shade mode
 
 */
 
-const Size = 20;
+var Size = 20;
 function initializeGrid(){
   let container = document.querySelector("#grid-container");
   for(let i=0; i<Size*Size; i++){
@@ -15,9 +15,19 @@ function initializeGrid(){
     //squares so same h and w
     newDiv.style.height = width;
     newDiv.style.display = "inline-block";
+    //intial color white
+    newDiv.style.backgroundColor = "rgb(255,255,255)";
     container.appendChild(newDiv);
   } 
   applyDefaultMode();
+}
+function clearGrid(){
+  //remove tiles from the grid
+  let grid = document.querySelector("#grid-container");
+  let children = [...grid.childNodes];
+  children.forEach(child =>{
+    grid.removeChild(child);
+  });
 }
 
 function applyDefaultMode(){
@@ -32,7 +42,11 @@ function applyShadeMode(){
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = (e)=>{
-      e.target.style.backgroundColor = 'hsl(100,10%,79%';///
+      let rgbArray = e.target.style.backgroundColor.match(/\d+/g);
+      rgbArray = rgbArray.map(x=>{
+       return  +x-26 < 0 ? 0 : +x-26; 
+      });
+      e.target.style.backgroundColor = `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;
     };
   });
 }
@@ -56,11 +70,21 @@ function applyRandomMode(){
     };
   })
 }
+
+
 document.querySelector("#random-mode").onclick = applyRandomMode;
 document.querySelector("#shade-mode").onclick = applyShadeMode;
 document.querySelector("#erase-mode").onclick = applyEraseMode;
 document.querySelector("#default-mode").onclick = applyDefaultMode;
-
+document.querySelector("#clear-button").addEventListener('click',()=>{
+  let oldSize = Size;
+  do{
+    Size = Number(prompt("Specify the new dimensions a x a"));
+  }while(Number.isNaN(Size));
+  if(!Size) Size = oldSize //chose cancel
+  clearGrid();
+  initializeGrid();
+});
 initializeGrid();
 function setSize(newSize){
   Size = newSize;
