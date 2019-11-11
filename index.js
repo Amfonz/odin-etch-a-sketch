@@ -34,7 +34,7 @@ function clearGrid(){
 
 function applyDefaultMode(){
   mode = 'default-mode';
-  let tiles = [...document.querySelector('#grid-container').childNodes];
+  let tiles = document.querySelector('#grid-container').childNodes;
     tiles.forEach(tile=>{
       tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
@@ -46,7 +46,7 @@ function applyDefaultMode(){
 
 function applyShadeMode(){
   mode = 'shade-mode';
-  let tiles = [...document.querySelector('#grid-container').childNodes];
+  let tiles = document.querySelector('#grid-container').childNodes;
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
@@ -61,7 +61,7 @@ function applyShadeMode(){
 }
 function applyEraseMode(){
   mode = 'erase-mode';
-  let tiles = [...document.querySelector('#grid-container').childNodes];
+  let tiles = document.querySelector('#grid-container').childNodes;
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
@@ -73,7 +73,7 @@ function applyEraseMode(){
 
 function applyRandomMode(){
   mode = 'random-mode';
-  let tiles = [...document.querySelector('#grid-container').childNodes];
+  let tiles = document.querySelector('#grid-container').childNodes;
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
