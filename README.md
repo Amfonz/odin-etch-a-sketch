@@ -7,5 +7,5 @@ Features <br>
   <li>resizable grid</li>
   <li>random colors</li>
   <li>multi-shaded mode</li>
-
+ <li>click and drag or hover over drawing</li>
 </ul>
