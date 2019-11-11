@@ -8,7 +8,7 @@ var useClick = false;
 var Size = 20;
 var mode = 'default-mode';
 function initializeGrid(){
-  let container = document.querySelector("#grid-container");
+  let container = document.querySelector('#grid-container');
   for(let i=0; i<Size*Size; i++){
     //determine length, create div and append to containing element
     let width = (container.offsetWidth - 2)/Size + 'px';
@@ -16,16 +16,16 @@ function initializeGrid(){
     newDiv.style.width = width;
     //squares so same h and w
     newDiv.style.height = width;
-    newDiv.style.display = "inline-block";
+    newDiv.style.display = 'inline-block';
     //intial color white
-    newDiv.style.backgroundColor = "rgb(255,255,255)";
+    newDiv.style.backgroundColor = 'rgb(255,255,255)';
     container.appendChild(newDiv);
   } 
   applyDefaultMode();
 }
 function clearGrid(){
   //remove tiles from the grid
-  let grid = document.querySelector("#grid-container");
+  let grid = document.querySelector('#grid-container');
   let children = [...grid.childNodes];
   children.forEach(child =>{
     grid.removeChild(child);
@@ -34,11 +34,11 @@ function clearGrid(){
 
 function applyDefaultMode(){
   mode = 'default-mode';
-  let tiles = [...document.querySelector("#grid-container").childNodes];
+  let tiles = [...document.querySelector('#grid-container').childNodes];
     tiles.forEach(tile=>{
       tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
-        e.target.style.backgroundColor = "rgb(0,0,0)";
+        e.target.style.backgroundColor = 'rgb(0,0,0)';
       }
     };
   });
@@ -46,7 +46,7 @@ function applyDefaultMode(){
 
 function applyShadeMode(){
   mode = 'shade-mode';
-  let tiles = [...document.querySelector("#grid-container").childNodes];
+  let tiles = [...document.querySelector('#grid-container').childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
@@ -61,7 +61,7 @@ function applyShadeMode(){
 }
 function applyEraseMode(){
   mode = 'erase-mode';
-  let tiles = [...document.querySelector("#grid-container").childNodes];
+  let tiles = [...document.querySelector('#grid-container').childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
@@ -73,7 +73,7 @@ function applyEraseMode(){
 
 function applyRandomMode(){
   mode = 'random-mode';
-  let tiles = [...document.querySelector("#grid-container").childNodes];
+  let tiles = [...document.querySelector('#grid-container').childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
@@ -86,34 +86,34 @@ function applyRandomMode(){
   })
 }
 
-document.querySelector("#useClick").onclick = (e)=>{
+document.querySelector('#useClick').onclick = (e)=>{
   useClick = !useClick;
   e.target.classList.toggle('selected');
 };
-document.querySelector("#random-mode").onclick = (e)=>{
+document.querySelector('#random-mode').onclick = (e)=>{
   document.querySelector(`#${mode}`).classList.toggle('selected');
   e.target.classList.toggle('selected');
   applyRandomMode();
 };
-document.querySelector("#shade-mode").onclick = (e)=>{
+document.querySelector('#shade-mode').onclick = (e)=>{
   document.querySelector(`#${mode}`).classList.toggle('selected');
   e.target.classList.toggle('selected');
   applyShadeMode();
 };
-document.querySelector("#erase-mode").onclick =  (e)=>{
+document.querySelector('#erase-mode').onclick = (e)=>{
   document.querySelector(`#${mode}`).classList.toggle('selected');
   e.target.classList.toggle('selected');
   applyEraseMode();
 };
-document.querySelector("#default-mode").onclick =  (e)=>{
+document.querySelector('#default-mode').onclick = (e)=>{
   document.querySelector(`#${mode}`).classList.toggle('selected');
   e.target.classList.toggle('selected');
   applyDefaultMode();
 };
-document.querySelector("#clear-button").addEventListener('click',()=>{
+document.querySelector('#clear-button').addEventListener('click',()=>{
   let oldSize = Size;
   do{
-    Size = Number(prompt("Specify the new dimensions a x a"));
+    Size = Number(prompt('Specify the new dimensions a x a'));
   }while(Number.isNaN(Size));
   if(!Size) {
     Size = oldSize;//chose cancel
