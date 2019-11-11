@@ -15,15 +15,16 @@ body div{
   width: 700px;
   height: 700px;
   border: 1px solid black;
-  margin: 100px auto;
+  margin: 50px auto;
 
 }
 #grid-container div{
   vertical-align: top;
 }
 ul{
-  float: left;
-  margin: 100px 50px;
+  position: fixed;
+  left: 10px;
+  top: 150px;
 }
 ul li, ul span{
   margin-top: 5px;
