@@ -34,56 +34,49 @@ function clearGrid(){
 
 function applyDefaultMode(){
   mode = 'default-mode';
-  let tiles = document.querySelector('#grid-container').childNodes;
-    tiles.forEach(tile=>{
-      tile.onmouseover = tile.onmousedown = (e)=>{
-      if(useClick && e.buttons == 1 || !useClick){
-        e.target.style.backgroundColor = 'rgb(0,0,0)';
-      }
-    };
-  });
-};
+  let grid = document.querySelector('#grid-container');
+  grid.onmouseover = grid.onmousedown = (e)=>{
+    if(useClick && e.buttons == 1 || !useClick){
+      e.target.style.backgroundColor = 'rgb(0,0,0)';
+    }
+  };
+}
 
 function applyShadeMode(){
   mode = 'shade-mode';
-  let tiles = document.querySelector('#grid-container').childNodes;
-  tiles.forEach((tile)=>{
-    tile.onmouseover = tile.onmousedown = (e)=>{
-      if(useClick && e.buttons == 1 || !useClick){
-        let rgbArray = e.target.style.backgroundColor.match(/\d+/g);
-        rgbArray = rgbArray.map(x=>{
-        return  +x-26 < 0 ? 0 : +x-26; 
-        });
-        e.target.style.backgroundColor = `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;
-      }
-    };
-  });
+  let grid = document.querySelector('#grid-container');
+  grid.onmouseover = grid.onmousedown = (e) => {
+    if(useClick && e.buttons == 1 || !useClick){
+      console.log(e.target.style.backgroundColor);
+      let rgbArray = e.target.style.backgroundColor.match(/\d+/g);
+      rgbArray = rgbArray.map(x=>{
+      return  +x-26 < 0 ? 0 : +x-26; 
+      });
+      e.target.style.backgroundColor = `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`;
+    }
+  };
 }
 function applyEraseMode(){
   mode = 'erase-mode';
-  let tiles = document.querySelector('#grid-container').childNodes;
-  tiles.forEach((tile)=>{
-    tile.onmouseover = tile.onmousedown = (e)=>{
-      if(useClick && e.buttons == 1 || !useClick){
-        e.target.style.backgroundColor = 'rgb(255,255,255)';
-      }
-    };
-  });
+  let grid = document.querySelector('#grid-container');
+  grid.onmouseover = grid.onmousedown = (e)=>{
+    if(useClick && e.buttons == 1 || !useClick){
+      e.target.style.backgroundColor = 'rgb(255,255,255)';
+    }
+  };
 }
 
 function applyRandomMode(){
   mode = 'random-mode';
-  let tiles = document.querySelector('#grid-container').childNodes;
-  tiles.forEach((tile)=>{
-    tile.onmouseover = tile.onmousedown = (e)=>{
-      if(useClick && e.buttons == 1 || !useClick){
-        r = Math.random() * 256;
-        g = Math.random() * 256;
-        b = Math.random() * 256;
-        e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
-      }
-    };
-  })
+  let grid = document.querySelector('#grid-container');
+  grid.onmouseover = grid.onmousedown = (e)=>{
+    if(useClick && e.buttons == 1 || !useClick){
+      r = Math.random() * 256;
+      g = Math.random() * 256;
+      b = Math.random() * 256;
+      e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
+    }
+  };
 }
 
 document.querySelector('#useClick').onclick = (e)=>{
