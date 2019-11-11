@@ -1,16 +1,12 @@
 /*
-todo: implement draw on mousehold
+todo: 
       fix resizing bug for big values
 */
 
-/**
- * if useClick and e.buttons == 1 or !useClick
- * 
- * 
- * 
- */
+
 var useClick = false;
 var Size = 20;
+var mode = 'default-mode';
 function initializeGrid(){
   let container = document.querySelector("#grid-container");
   for(let i=0; i<Size*Size; i++){
@@ -37,6 +33,7 @@ function clearGrid(){
 }
 
 function applyDefaultMode(){
+  mode = 'default-mode';
   let tiles = [...document.querySelector("#grid-container").childNodes];
     tiles.forEach(tile=>{
       tile.onmouseover = tile.onmousedown = (e)=>{
@@ -48,6 +45,7 @@ function applyDefaultMode(){
 };
 
 function applyShadeMode(){
+  mode = 'shade-mode';
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
@@ -62,45 +60,77 @@ function applyShadeMode(){
   });
 }
 function applyEraseMode(){
+  mode = 'erase-mode';
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
-        e.target.style.backgroundColor = 'white';
+        e.target.style.backgroundColor = 'rgb(255,255,255)';
       }
     };
   });
 }
 
 function applyRandomMode(){
+  mode = 'random-mode';
   let tiles = [...document.querySelector("#grid-container").childNodes];
   tiles.forEach((tile)=>{
     tile.onmouseover = tile.onmousedown = (e)=>{
       if(useClick && e.buttons == 1 || !useClick){
-      r = Math.random() * 256;
-      g = Math.random() * 256;
-      b = Math.random() * 256;
-      e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
+        r = Math.random() * 256;
+        g = Math.random() * 256;
+        b = Math.random() * 256;
+        e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
       }
     };
   })
 }
 
-document.querySelector("#useClick").onclick = ()=>{useClick = !useClick;};
-document.querySelector("#random-mode").onclick = applyRandomMode;
-document.querySelector("#shade-mode").onclick = applyShadeMode;
-document.querySelector("#erase-mode").onclick = applyEraseMode;
-document.querySelector("#default-mode").onclick = applyDefaultMode;
+document.querySelector("#useClick").onclick = (e)=>{
+  useClick = !useClick;
+  e.target.classList.toggle('selected');
+};
+document.querySelector("#random-mode").onclick = (e)=>{
+  document.querySelector(`#${mode}`).classList.toggle('selected');
+  e.target.classList.toggle('selected');
+  applyRandomMode();
+};
+document.querySelector("#shade-mode").onclick = (e)=>{
+  document.querySelector(`#${mode}`).classList.toggle('selected');
+  e.target.classList.toggle('selected');
+  applyShadeMode();
+};
+document.querySelector("#erase-mode").onclick =  (e)=>{
+  document.querySelector(`#${mode}`).classList.toggle('selected');
+  e.target.classList.toggle('selected');
+  applyEraseMode();
+};
+document.querySelector("#default-mode").onclick =  (e)=>{
+  document.querySelector(`#${mode}`).classList.toggle('selected');
+  e.target.classList.toggle('selected');
+  applyDefaultMode();
+};
 document.querySelector("#clear-button").addEventListener('click',()=>{
   let oldSize = Size;
   do{
     Size = Number(prompt("Specify the new dimensions a x a"));
   }while(Number.isNaN(Size));
-  if(!Size) Size = oldSize //chose cancel
+  if(!Size) {
+    Size = oldSize;//chose cancel
+    return;
+  }
+  //grid gets set back to default, un highlight last switch
+  document.querySelector(`#${mode}`).classList.toggle('selected');
+  document.querySelector('#default-mode').classList.toggle('selected');
   clearGrid();
   initializeGrid();
 });
-initializeGrid();
+
+function init(){
+  document.querySelector('#default-mode').classList.toggle('selected');
+  initializeGrid();
+}
 function setSize(newSize){
   Size = newSize;
 }
+init();

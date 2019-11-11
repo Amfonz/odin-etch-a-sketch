@@ -1,12 +1,19 @@
 body{
   text-align: center;
+  background-color: hsl(30,70%,70%);
+  padding-top: 30px;
+}
+h1{
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: monospace, sans-serif;
 }
 body div{
   text-align: left;
 }
 #grid-container{
-  width: 400px;
-  height: 400px;
+  width: 700px;
+  height: 700px;
   border: 1px solid black;
   margin: 100px auto;
 
@@ -18,9 +25,30 @@ ul{
   float: left;
   margin: 100px 50px;
 }
+ul li, ul span{
+  margin-top: 5px;
+}
+ul button{
+  border: none;
+  height: 30px;
+  width: 100px;
+}
+ul button:hover{
+  cursor: pointer;
+  margin: 10px 0;
+  background-color: hsl(30,70%,80%);
+  box-shadow: 0 0 10px black;
+  transform: scale(1.1);
+}
 .description{
   display: none;
 }
-#shade-mode:hover + span,#random-mode:hover + span {
+#shade-mode:hover + span, #random-mode:hover + span {
   display: block;
+  width: 100px;
+  margin: 10px 0;
+}
+.selected{
+  background-color: hsl(100,40%,60%);
+  border: 1px solid black;
 }
